@@ -2,34 +2,72 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Rust WebAssembly Simple Example</title>
+  <title>Rust WebAssembly Template</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       max-width: 800px;
       margin: 0 auto;
       padding: 20px;
+      line-height: 1.6;
+      color: #333;
+    }
+    h1 {
+      color: #333;
+      border-bottom: 2px solid #4CAF50;
+      padding-bottom: 10px;
     }
     .container {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-    .card {
-      border: 1px solid #ddd;
+      background-color: #f9f9f9;
       border-radius: 8px;
       padding: 20px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    code {
+      background-color: #f0f0f0;
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+    .rust-logo {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .rust-logo img {
+      max-width: 200px;
+    }
+    .demo-container {
+      background-color: #f0f8ff;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-top: 20px;
+    }
+    .demo-box {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
+      background-color: white;
+    }
+    .demo-result {
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #f0f0f0;
+      border-radius: 4px;
+      font-family: monospace;
+      min-height: 20px;
     }
     button {
       background-color: #4CAF50;
       border: none;
       color: white;
-      padding: 10px 20px;
+      padding: 8px 16px;
       text-align: center;
       text-decoration: none;
       display: inline-block;
-      font-size: 16px;
+      font-size: 14px;
       margin: 4px 2px;
       cursor: pointer;
       border-radius: 4px;
@@ -39,39 +77,59 @@
       margin: 5px 0;
       border: 1px solid #ddd;
       border-radius: 4px;
+      width: 200px;
     }
   </style>
 </head>
 <body>
-  <h1>Rust WebAssembly Demo</h1>
+  <h1>🦀 Rust WebAssembly Template</h1>
 
   <div class="container">
-    <div class="card">
-      <h2>Greeting</h2>
-      <div>
-        <input type="text" id="name-input" placeholder="Enter your name">
-        <button id="greet-button">Greet</button>
-      </div>
-      <p id="greeting-output"></p>
+    <div class="rust-logo">
+      <img src="https://rustwasm.github.io/assets/wasm-ferris.png" alt="Rust + WebAssembly">
     </div>
 
-    <div class="card">
-      <h2>Fibonacci Calculator</h2>
-      <div>
-        <input type="number" id="fibonacci-input" placeholder="Enter a number" min="0" max="40">
-        <button id="fibonacci-button">Calculate</button>
-      </div>
-      <p id="fibonacci-output"></p>
-    </div>
+    <h2>Project Overview</h2>
+    <p>
+      This template demonstrates the integration of Rust and WebAssembly for high-performance web applications.
+      It allows you to write computationally intensive code in Rust that runs directly in the browser via WebAssembly.
+    </p>
 
-    <div class="card">
-      <h2>Addition</h2>
-      <div>
-        <input type="number" id="add-input-a" placeholder="First number">
-        <input type="number" id="add-input-b" placeholder="Second number">
-        <button id="add-button">Add</button>
-      </div>
-      <p id="add-output"></p>
+    <h2>Features</h2>
+    <ul>
+      <li>Rust code compiled to WebAssembly for near-native performance</li>
+      <li>Seamless JavaScript integration</li>
+      <li>Modern development workflow with hot reloading</li>
+      <li>Built-in testing infrastructure</li>
+      <li>Optimized for production builds</li>
+    </ul>
+
+    <h2>Example Function</h2>
+    <p>
+      This template includes a simple greeting function:
+    </p>
+    <ul>
+      <li><code>greet(name)</code>: Generates a personalized greeting message</li>
+    </ul>
+
+    <h2>Getting Started</h2>
+    <p>
+      Check out the <a href="https://github.com/manonja/rust-wasm-template">GitHub repository</a> for detailed instructions
+      on how to use this template for your own projects.
+    </p>
+  </div>
+
+  <!-- Interactive Demo Section -->
+  <div class="container demo-container">
+    <h2>Try It Out!</h2>
+    <p>Experience Rust WebAssembly in action with this interactive example:</p>
+
+    <div class="demo-box" id="demo-greet">
+      <h3>Greeting Function</h3>
+      <p>Enter your name to receive a greeting from Rust:</p>
+      <input type="text" id="name-input" placeholder="Enter your name">
+      <button id="greet-button">Greet</button>
+      <div class="demo-result" id="greet-result"></div>
     </div>
   </div>
 

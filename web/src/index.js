@@ -1,69 +1,73 @@
 // Import the WebAssembly module
-import * as wasm from "rust-wasm-template";
+import init, * as wasmModule from "rust-wasm-template";
 
-// Add listeners once the DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
+// Global variable to hold the initialized wasm module
+let wasm;
+
+// Initialize the WebAssembly module
+async function initWasm() {
+  try {
+    // Initialize the WebAssembly module
+    await init();
+    wasm = wasmModule;
+    console.log("WebAssembly module initialized successfully:", wasm);
+
+    // Setup the UI after WebAssembly is initialized
+    setupUI();
+  } catch (error) {
+    console.error("Failed to initialize WebAssembly module:", error);
+    document.body.innerHTML += `<div style="color: red; padding: 20px; background-color: #ffeeee; margin-top: 20px; border-radius: 8px;">
+      <h3>Error Loading WebAssembly</h3>
+      <p>${error.message}</p>
+      <p>Please check the console for more details.</p>
+    </div>`;
+  }
+}
+
+// Setup the UI and event listeners
+function setupUI() {
+  console.log("Setting up UI");
+
   // Greeting functionality
   const greetButton = document.getElementById('greet-button');
   const nameInput = document.getElementById('name-input');
-  const greetingOutput = document.getElementById('greeting-output');
+  const greetResult = document.getElementById('greet-result');
 
-  greetButton.addEventListener('click', () => {
-    const name = nameInput.value || 'stranger';
-    try {
-      const result = wasm.greet(name);
-      greetingOutput.textContent = result;
-    } catch (e) {
-      greetingOutput.textContent = `Error: ${e}`;
-    }
-  });
+  console.log("Greeting elements:", { greetButton, nameInput, greetResult });
 
-  // Fibonacci functionality
-  const fibonacciButton = document.getElementById('fibonacci-button');
-  const fibonacciInput = document.getElementById('fibonacci-input');
-  const fibonacciOutput = document.getElementById('fibonacci-output');
+  if (greetButton) {
+    greetButton.addEventListener('click', () => {
+      console.log("Greet button clicked");
+      const name = nameInput.value || 'stranger';
+      console.log("Input name:", name);
 
-  fibonacciButton.addEventListener('click', () => {
-    const n = parseInt(fibonacciInput.value);
-    if (isNaN(n) || n < 0) {
-      fibonacciOutput.textContent = 'Please enter a valid non-negative number';
-      return;
-    }
-    if (n > 40) {
-      fibonacciOutput.textContent = 'Number too large (max 40)';
-      return;
-    }
+      try {
+        console.log("Available wasm functions:", Object.keys(wasm));
 
-    try {
-      const startTime = performance.now();
-      const result = wasm.fibonacci(n);
-      const endTime = performance.now();
-      fibonacciOutput.textContent = `Fibonacci(${n}) = ${result} (calculated in ${(endTime - startTime).toFixed(2)}ms)`;
-    } catch (e) {
-      fibonacciOutput.textContent = `Error: ${e}`;
-    }
-  });
+        if (typeof wasm.greet === 'function') {
+          console.log("Calling wasm.greet with:", name);
+          const result = wasm.greet(name);
+          console.log("Greet result:", result);
+          greetResult.textContent = result;
+          greetResult.style.color = '#4CAF50';
+        } else {
+          console.error("wasm.greet is not a function");
+          greetResult.textContent = "Error: wasm.greet is not a function";
+          greetResult.style.color = 'red';
+        }
+      } catch (e) {
+        console.error("Error in greet function:", e);
+        greetResult.textContent = `Error: ${e}`;
+        greetResult.style.color = 'red';
+      }
+    });
+  } else {
+    console.error("Greet button not found in the DOM");
+  }
+}
 
-  // Addition functionality
-  const addButton = document.getElementById('add-button');
-  const addInputA = document.getElementById('add-input-a');
-  const addInputB = document.getElementById('add-input-b');
-  const addOutput = document.getElementById('add-output');
-
-  addButton.addEventListener('click', () => {
-    const a = parseInt(addInputA.value);
-    const b = parseInt(addInputB.value);
-
-    if (isNaN(a) || isNaN(b)) {
-      addOutput.textContent = 'Please enter valid numbers';
-      return;
-    }
-
-    try {
-      const result = wasm.add(a, b);
-      addOutput.textContent = `${a} + ${b} = ${result}`;
-    } catch (e) {
-      addOutput.textContent = `Error: ${e}`;
-    }
-  });
+// Wait for the DOM to be loaded before initializing WebAssembly
+document.addEventListener('DOMContentLoaded', () => {
+  console.log("DOM fully loaded, initializing WebAssembly...");
+  initWasm();
 });

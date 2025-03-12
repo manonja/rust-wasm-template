@@ -20,22 +20,6 @@ pub fn greet(name: &str) -> String {
     message
 }
 
-// A simple calculation function
-#[wasm_bindgen]
-pub fn fibonacci(n: u32) -> u32 {
-    match n {
-        0 => 0,
-        1 => 1,
-        _ => fibonacci(n - 1) + fibonacci(n - 2),
-    }
-}
-
-// Add two numbers
-#[wasm_bindgen]
-pub fn add(a: i32, b: i32) -> i32 {
-    a + b
-}
-
 // Unit tests
 #[cfg(test)]
 mod tests {
@@ -44,16 +28,10 @@ mod tests {
 
     #[test]
     #[wasm_bindgen_test]
-    fn test_add() {
-        assert_eq!(add(2, 3), 5);
-    }
-
-    #[test]
-    #[wasm_bindgen_test]
-    fn test_fibonacci() {
-        assert_eq!(fibonacci(0), 0);
-        assert_eq!(fibonacci(1), 1);
-        assert_eq!(fibonacci(2), 1);
-        assert_eq!(fibonacci(5), 5);
+    fn test_greet() {
+        assert_eq!(
+            greet("Test"),
+            "Hello, Test! Welcome to Rust and WebAssembly!"
+        );
     }
 }
