@@ -76,7 +76,7 @@ npm start
 ## 📁 Project Structure
 
 ```
-rust-wasm-template/
+OS-Scheduler/
 ├── src/                  # Rust source code
 │   └── lib.rs            # Main Rust library with WebAssembly exports
 ├── web/                  # Web interface

@@ -12,14 +12,6 @@ extern "C" {
     fn log(s: &str);
 }
 
-// Export a function to JavaScript
-#[wasm_bindgen]
-pub fn greet(name: &str) -> String {
-    let message = format!("Hello, {}! Welcome to Rust and WebAssembly!", name);
-    log(&message); // Log to JavaScript console
-    message
-}
-
 // Unit tests
 #[cfg(test)]
 mod tests {
